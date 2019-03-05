@@ -1,10 +1,10 @@
 export const ADD_TODO = "ADD_TODO";
 
-export const addTodo = state => {
-  console.log("in action creater: ", state);
+export const addTodo = newTodo => {
+  console.log("in action creater: ", newTodo);
 
   return {
     type: ADD_TODO,
-    payload: state
+    payload: newTodo
   };
 };
