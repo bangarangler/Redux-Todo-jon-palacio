@@ -1,12 +1,18 @@
 import React from "react";
 
+import { connect } from "react-redux";
+import { addTodo } from "../action/action.js";
+
+const uuid4 = require("uuid4");
+
 class TodoForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       todo: {
         value: "",
-        completed: false
+        completed: false,
+        id: uuid4()
       }
     };
   }
@@ -14,17 +20,23 @@ class TodoForm extends React.Component {
   handleChange = e => {
     e.persist();
     this.setState(prevState => ({
-      ...prevState,
-      todo: { [e.target.name]: e.target.value }
+      todo: { ...prevState.todo, [e.target.name]: e.target.value }
     }));
   };
 
   //addTodo = e => {
   //e.preventDefault();
-  //this.setState(prevState => ({
-  //...prevState, todo:
-  //}))
+  //this.props.addTodo(this.state.todo);
+  //this.setState({ todo: { value: "", completed: false } });
   //};
+
+  addTodo = e => {
+    //debugger;
+    e.preventDefault();
+    const newTodo = this.state.todo;
+    this.props.addTodo(newTodo);
+    this.setState({ todo: { value: "", comleted: false, id: uuid4() } });
+  };
 
   render() {
     return (
@@ -43,4 +55,14 @@ class TodoForm extends React.Component {
   }
 }
 
-export default TodoForm;
+const mapStateToProps = state => ({});
+
+//export default connect(
+//mapStateToProps,
+//{ ADD_TODO, addTodo }
+//)(TodoForm);
+//
+export default connect(
+  mapStateToProps,
+  { addTodo }
+)(TodoForm);
